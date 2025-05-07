@@ -1,0 +1,16 @@
+<div class="bookings-container">
+    <h2>My Bookings</h2>
+    <div *ngIf="bookings.length > 0; else noBookings">
+      <div *ngFor="let booking of bookings" class="booking-card">
+        <h3>{{ booking.destination }}</h3>
+        <p><strong>Travel Dates:</strong> {{ booking.dates }}</p>
+        <p><strong>Package:</strong> {{ booking.package }}</p>
+        <p><strong>Price:</strong> {{ booking.price }}</p>
+      </div>
+    </div>
+    <ng-template #noBookings>
+      <p>You have no bookings at the moment.</p>
+    </ng-template>
+    <button (click)="goBack()" class="btn btn-secondary">Back</button>
+  </div>
+  

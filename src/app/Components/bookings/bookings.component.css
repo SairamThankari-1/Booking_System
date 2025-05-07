@@ -1,0 +1,41 @@
+.bookings-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .bookings-container h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .booking-card {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .booking-card h3 {
+    margin-top: 0;
+  }
+  
+  .booking-card p {
+    margin: 5px 0;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  

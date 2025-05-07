@@ -1,0 +1,16 @@
+<div class="profile-container">
+    <button (click)="goBack()">Back</button>
+    <h2>Profile</h2>
+    <div class="profile-details">
+      <p><strong>Username:</strong> {{ user.username }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Phone:</strong> {{ user.phone }}</p>
+      <h3>My Tickets</h3>
+      <ul>
+        <li *ngFor="let ticket of user.tickets">
+          {{ ticket.destination }} - {{ ticket.date }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  

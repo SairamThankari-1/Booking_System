@@ -1,0 +1,28 @@
+<div class="contact-container">
+    <h2>Contact Us</h2>
+    <p>If you have any questions or need assistance, feel free to reach out to us.</p>
+    <div class="contact-info">
+      <p><strong>Email:</strong> supporttraveladventures.com</p>
+      <p><strong>Phone:</strong> +1 234 567 890</p>
+      <p><strong>Address:</strong> 123 Travel Street, Adventure City, Country</p>
+    </div>
+    <div class="contact-form">
+      <label for="packageId">Package ID:</label>
+      <input type="text" id="packageId" [(ngModel)]="packageId" placeholder="Enter your package ID">
+      
+      <label for="issueDescription">Issue Description:</label>
+      <textarea id="issueDescription" [(ngModel)]="issueDescription" placeholder="Describe your issue"></textarea>
+      
+      <button (click)="submitIssue()" class="btn btn-primary">Submit</button>
+    </div>
+    <button (click)="goBack()" class="btn btn-secondary">Back</button>
+  
+    <div *ngIf="issues.length > 0" class="my-issues">
+      <h3>My Issues</h3>
+      <div *ngFor="let issue of issues" class="issue-item">
+        <p><strong>Package ID:</strong> {{ issue.packageId }}</p>
+        <p><strong>Issue Description:</strong> {{ issue.issueDescription }}</p>
+      </div>
+    </div>
+  </div>
+  

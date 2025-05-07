@@ -1,0 +1,35 @@
+<div class="landing-page">
+    <div class="background-image">
+      <div class="container form-container">
+        <h1 class="text-center text-white">{{name}} Book Your Travel Package</h1>
+        <form (ngSubmit)="viewPackages()">
+          <div class="mb-3">
+            <label for="startDate" class="form-label text-white">Start Date:</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="startDate">
+          </div>
+  
+          <div class="mb-3">
+            <label for="duration" class="form-label text-white">Duration:</label>
+            <select class="form-select" id="duration" name="duration" [(ngModel)]="duration">
+              <option value="1">1 Day</option>
+              <option value="3">3 Days</option>
+              <option value="5">5 Days</option>
+              <option value="10">10 Days</option>
+              <!-- Add more options as needed -->
+            </select>
+          </div>
+  
+          <div class="mb-3">
+            <label for="destination" class="form-label text-white">Destination:</label>
+            <input type="text" class="form-control" id="destination" name="destination" [(ngModel)]="destination">
+          </div>
+  
+          <button type="submit" class="btn btn-primary w-100">View Packages</button>
+        </form>
+        <div>
+        <button (click)="goBack()" class="btn btn-secondary m-2">Back</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

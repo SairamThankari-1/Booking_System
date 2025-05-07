@@ -1,0 +1,129 @@
+<div class="update-package-container">
+    <h2>Update Package</h2>
+   
+    <!-- Package ID Input -->
+    <div class="form-group">
+      <label for="packageId">Package ID:</label>
+      <input
+        type="number"
+        id="packageId"
+        [(ngModel)]="packageId"
+        class="form-control"
+        placeholder="Enter Package ID"
+      />
+      <button class="btn btn-primary" (click)="fetchPackage()">Fetch Package</button>
+    </div>
+   
+    <!-- Error Message -->
+    <div *ngIf="error" class="error-message">
+      {{ error }}
+    </div>
+   
+    <!-- Loading Indicator -->
+    <div *ngIf="loading" class="loading">
+      <p>Loading package details...</p>
+    </div>
+   
+    <!-- Package Form -->
+    <form [formGroup]="packageForm" (ngSubmit)="onSubmit()" *ngIf="!loading && !error">
+      <!-- Title -->
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          class="form-control"
+          placeholder="Enter package title"
+        />
+      </div>
+   
+      <!-- Duration -->
+      <div class="form-group">
+        <label for="duration">Duration:</label>
+        <input
+          type="text"
+          id="duration"
+          formControlName="duration"
+          class="form-control"
+          placeholder="Enter package duration"
+        />
+      </div>
+   
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="form-control"
+          placeholder="Enter package description"
+        ></textarea>
+      </div>
+   
+      <!-- Price -->
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input
+          type="number"
+          id="price"
+          formControlName="price"
+          class="form-control"
+          placeholder="Enter package price"
+        />
+      </div>
+   
+      <!-- Included Services -->
+      <div class="form-group">
+        <label for="includedServices">Included Services:</label>
+        <input
+          type="text"
+          id="includedServices"
+          formControlName="includedServices"
+          class="form-control"
+          placeholder="Enter included services"
+        />
+      </div>
+   
+      <!-- Category -->
+      <div class="form-group">
+        <label for="category">Category:</label>
+        <input
+          type="text"
+          id="category"
+          formControlName="category"
+          class="form-control"
+          placeholder="Enter package category"
+        />
+      </div>
+   
+      <!-- Travel Agent -->
+      <div class="form-group">
+        <label for="travelAgent">Travel Agent:</label>
+        <input
+          type="text"
+          id="travelAgent"
+          formControlName="travelAgent"
+          class="form-control"
+          placeholder="Enter travel agent name"
+        />
+      </div>
+   
+      <!-- Image -->
+      <div class="form-group">
+        <label for="image">Image:</label>
+        <input
+          type="text"
+          id="image"
+          formControlName="image"
+          class="form-control"
+          placeholder="Enter image URL"
+        />
+      </div>
+   
+      <!-- Submit and Cancel Buttons -->
+      <button type="submit" class="btn btn-primary">Update Package</button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+    </form>
+  </div>
+   

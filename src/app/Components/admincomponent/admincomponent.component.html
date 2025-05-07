@@ -1,0 +1,102 @@
+
+    <div class="dashboard">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <nav>
+                <ul>
+                    <li><a href="#bookings">Bookings</a></li>
+                    <li><a href="#customers">Customers</a></li>
+                    <li><a href="#packages">Travel Packages</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="bookings">
+                <h2>Manage Bookings</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>User ID</th>
+                            <th>Package ID</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Payment Id</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Booking data will go here -->
+                            <tr *ngFor="let booking of bookings">
+                                 <td>{{ booking.bookingID }}</td>
+                                 <td>{{ booking.userID }}</td>
+                                 <td>{{ booking.packageID }}</td>
+                                 <td>{{ booking.startDate }}</td>
+                                 <td>{{ booking.endDate }}</td>
+                                 <td>{{ booking.status }}</td>
+                                 <td>{{ booking.paymentID }}</td>
+                             </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section id="customers">
+                <h2>Customer Details</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>Phone</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Customer data will go here -->                         
+                            <tr *ngFor="let customer of customers">
+                                 <td>{{ customer.userID }}</td>
+                                 <td>{{ customer.name }}</td>
+                                 <td>{{ customer.email }}</td>
+                                 <td>{{ customer.password }}</td>
+                                 <td>{{ customer.contactNumber }}</td>
+                                 <td>{{ customer.role }}</td>
+                             </tr>
+
+                    </tbody>
+                </table>
+            </section>
+            <section id="packages">
+                <h2>Travel Packages</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Package ID</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Duration</th>
+                            <th>Including Services</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Package data will go here -->
+                            <tr *ngFor="let package of packages">
+                                 <td>{{ package.packageID }}</td>
+                                 <td>{{ package.title }}</td>
+                                 <td>{{ package.description }}</td>
+                                 <td>{{ package.price }}</td>
+                                 <td>{{ package.duration }}</td>
+                                 <td>{{ package.includedServices }}</td>
+                                 <td>{{ package.category }}</td>
+                             </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Travel Booking System</p>
+        </footer>
+    </div>
+
