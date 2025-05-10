@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AgentserviceService } from '../../Services/agentservice.service'; // Import the service
+import { AgentserviceService } from '../../Services/agentservice.service';
  
 @Component({
   selector: 'app-delete-package',
@@ -30,6 +30,8 @@ export class DeletePackageComponent {
     } else {
       console.error('Package ID is required');
     }
+   
   }
+ 
 }
  

@@ -56,7 +56,6 @@ export class PackagesComponent implements OnInit {
   applyFilters() {
     // Apply filters to the packages
     this.filteredPackages = this.packages.filter(pkg =>
-      (!this.filters.travelAgent || pkg.travelAgent?.toLowerCase().includes(this.filters.travelAgent.toLowerCase())) &&
       (!this.filters.title || pkg.title.toLowerCase().includes(this.filters.title.toLowerCase())) &&
       (!this.filters.price || pkg.price === parseInt(this.filters.price, 10)) &&
       (!this.filters.category || pkg.category?.toLowerCase().includes(this.filters.category.toLowerCase())) &&
@@ -71,12 +70,16 @@ export class PackagesComponent implements OnInit {
  
   goBack() {
     // Navigate back to the booking page
-    this.router.navigate(['/app-booknow']);
+    this.router.navigate(['/app-herosection']);
   }
  
   bookNow(packages: any) {
-    // Navigate to the booking page with the selected package title as a query parameter
-    this.router.navigate(['/app-booknow'], { queryParams: { packageTitle: packages.title } });
+    if (packages && packages.packageID) { // Use the correct property name (packageID)
+      // Navigate to the booking component with the package ID as a query parameter
+      this.router.navigate(['/app-booknow'], { queryParams: { packageId: packages.packageID } });
+    } else {
+      console.error('Package ID is missing or invalid:', packages);
+    }
   }
  
   toggleDetails(packages: any) {
@@ -128,6 +131,11 @@ export class PackagesComponent implements OnInit {
         console.error('Error deleting package:', err);
       }
     });
+  }
+  navigateToReviews(packageId: number): void {
+    this.packservice.getPackageById(packageId);
+    localStorage.setItem('packageId', packageId.toString());
+    this.router.navigate(['/app-reviews']);
   }
 }
  

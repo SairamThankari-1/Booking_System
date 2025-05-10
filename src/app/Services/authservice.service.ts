@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 import { catchError, Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { Constant } from '../Components/Constant/constant';
@@ -15,20 +16,24 @@ interface newUser {
   password: string;
   contactNumber: string;
 }
+interface AdminUser {
+  name: string;
+  email: string;
+  password: string;
+  contactNumber: string;
+  role: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthserviceService {
 
-  constructor(private http:HttpClient) { 
+  constructor(private http:HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { 
    
   }
 
   login(userData:user): Observable<any>  {
-    // const formData = new FormData();
-    // formData.append('username',this.email);
-    // formData.append('password',password);
     
     //call the API
     //In Post Supply 1. URL and 2. Param
@@ -40,16 +45,22 @@ export class AuthserviceService {
     );
   }
   getToken(): string | null  {
-    return localStorage.getItem('token');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('token');
+    }
+    return null;
   }
 
   setToken(token: string): void {
-    localStorage.setItem('token', token);
-
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('token', token);
+    }
   }
 
   removeToken(): void {
-    localStorage.removeItem('token');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('token');
+    }
   }
   // New method to decode the token and another method to extract tokens exp
   decodeToken(): any | null {
@@ -84,8 +95,7 @@ export class AuthserviceService {
   }
 
    // Method to get customers
-   
-getCustomers(): Observable<any> {
+getTotalUsers(): Observable<any> {
  const token = this.getToken();
  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
  return this.http.get(`${Constant.BASE_URI}User`, { headers });
@@ -100,35 +110,76 @@ getBookings(): Observable<any> {
  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
  return this.http.get(`${Constant.BASE_URI}Booking`, { headers });
 }
- registerUser(NewuserData: newUser): Observable<any> {   
+registerUser(NewuserData: newUser): Observable<any> {   
     return this.http.post(`${Constant.BASE_URI+Constant.Register}`, NewuserData);
-  }
+}
+updateUserProfile(userData: any): Observable<any> {
+  const token = this.getToken();
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  const userId = Number(localStorage.getItem('userId'));
+  return this.http.put(`${Constant.BASE_URI}User/${userId}`, userData, { headers });
+}
+
+registerAdminUser(AdminuserData: AdminUser): Observable<any> {
+  const token = this.getToken();
+  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  return this.http.post(`${Constant.BASE_URI}Auth/admin/register`, AdminuserData, { headers }); 
+}  
   setUser(userId:number,Name:string,Email:string,ContactNumber:string): void {
-    localStorage.setItem('userId', userId.toString());
-    localStorage.setItem('Name', Name);
-    localStorage.setItem('Email', Email);
-    localStorage.setItem('ContactNumber', ContactNumber);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('userId', userId.toString());
+      localStorage.setItem('Name', Name);
+      localStorage.setItem('Email', Email);
+      localStorage.setItem('ContactNumber', ContactNumber);
+    }
   }
   getUser(): { userId: number; Name: string; Email: string; ContactNumber: string } | null {
-    const userId = localStorage.getItem('userId');
-    const Name = localStorage.getItem('Name');
-    const Email = localStorage.getItem('Email');
-    const ContactNumber = localStorage.getItem('ContactNumber');
+    if (isPlatformBrowser(this.platformId)) {
+      const userId = localStorage.getItem('userId');
+      const Name = localStorage.getItem('Name');
+      const Email = localStorage.getItem('Email');
+      const ContactNumber = localStorage.getItem('ContactNumber');
 
-    if (userId && Name && Email && ContactNumber) {
-      return {
-        userId: parseInt(userId, 10),
-        Name,
-        Email,
-        ContactNumber
-      };
+      if (userId && Name && Email && ContactNumber) {
+        return {
+          userId: parseInt(userId, 10),
+          Name,
+          Email,
+          ContactNumber
+        };
+      }
     }
     return null;
   }
   removeUser(): void {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('Name');
-    localStorage.removeItem('Email');
-    localStorage.removeItem('ContactNumber');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('Name');
+      localStorage.removeItem('Email');
+      localStorage.removeItem('ContactNumber');
+      localStorage.removeItem('userRole');
+
+    }
   }
+  getUsersByRole(role: string): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${Constant.BASE_URI}User/admin/users-by-role?role=${role}`, { headers });
+  }
+  getReviews(): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${Constant.BASE_URI}Review`, { headers });
+  }
+  getBookingsByUserId(userId: number): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${Constant.BASE_URI}Booking/user/${userId}`, { headers });
+  }
+  cancelbooking(bookingId: number): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.put(`${Constant.BASE_URI}Booking/cancel/${bookingId}`, { headers });
+  }
+ 
 }

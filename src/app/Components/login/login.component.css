@@ -8,6 +8,8 @@
     /* align-self: center;
     align-items: center; */
     background-color: #ffffff;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
   
   .form-group {
@@ -44,4 +46,10 @@
   div.ng-invalid.ng-touched {
     color: red;
   }
-  
+  h1{
+    font-size: xx-large;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: italic;
+    text-align: center;
+    margin-top: 60px;
+  }

@@ -24,30 +24,7 @@ export class RegisterComponent {
      });
      
     }
-    //  email=this.registerForm?.get('email')?.value;
-    //  password = this.registerForm?.get('password')?.value;
-    //  name= this.registerForm?.get('name')?.value;
-    //  contact= this.registerForm?.get('contact')?.value;
-    //    user = {
-    //     name: this.registerForm?.get('name')?.value,
-    //     contact: this.registerForm?.get('contact')?.value,
-    //     email: this.email,
-    //     password: this.password
-    //     }
-
-
-
-  //  onSubmit(): void {
-  // //  if (this.registerForm.valid) {
-  // //  console.log('Form Submitted!', this.registerForm.value);
-  // //  this.authS.registerUser(this.user).subscribe({
-  // //   next: (response: any) => {
-  // //     alert('Registration Successful now login');
-  // //     this.router.navigate(['']);
-  // //   }
-  // //  }
-  // //   );
-  //   }
+   
 
   onSubmit(): void {
     if (this.registerForm.valid) {

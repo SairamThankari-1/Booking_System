@@ -3,7 +3,7 @@
   <button (click)="toggleSidebar()" class="toggle-filter-btn">
     {{ sidebarOpen ? 'Close Filters' : 'Open Filters' }}
   </button>
- 
+
   <!-- Sidebar for Filtering -->
   <div *ngIf="sidebarOpen" class="sidebar">
     <h3>Filter Packages</h3>
@@ -39,7 +39,8 @@
       <button type="submit" class="btn btn-primary">Apply Filters</button>
     </form>
   </div>
- 
+  <button class="back" (click)="goBack()">Back</button>
+
   <!-- Packages List -->
   <div class="packages-grid">
     <div class="package-card" *ngFor="let package of filteredPackages">
@@ -52,7 +53,7 @@
       <div class="package-info">
         <h2 class="package-title">{{ package.title }}</h2>
         <p class="package-duration"><strong>Duration:</strong> {{ package.duration }} days</p>
-        <p class="package-price"><strong>Price:</strong> ${{ package.price }}</p>
+        <p class="package-price"><strong>Price:</strong> Rs.{{ package.price }}</p>
  
         <!-- Detailed Information (conditionally visible) -->
         <div *ngIf="selectedPackage === package">
@@ -62,7 +63,6 @@
           <p class="package-travelagent"><strong>Travel Agent:</strong> {{ package.travelagent }}</p>
         </div>
       </div>
- 
       <!-- Package Footer -->
       <div class="package-footer">
         <button class="view-more-btn" (click)="toggleDetails(package)">
@@ -70,9 +70,11 @@
         </button>
         <button class="book-now-btn" (click)="bookNow(package)">Book Now</button>
         <!-- Toggle Button for Filtering Options -->
-     
+        <button class="btn btn-secondary" (click)="navigateToReviews(package.packageID)">Review</button>
+ 
       </div>
     </div>
+
   </div>
 </div>
  

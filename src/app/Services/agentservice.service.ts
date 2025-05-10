@@ -1,5 +1,5 @@
 import { HttpClient,  HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Constant } from '../Components/Constant/constant';
 import { AuthserviceService } from './authservice.service';
@@ -21,8 +21,23 @@ interface Package {
 })
 export class AgentserviceService {
   //private apiUrl = 'https://localhost:7117/api/Package';
-  // // Replace with actual backend API
-   
+   // Replace with actual backend API
+  packageId = signal<number | null>(null);
+ 
+  // Method to set the packageId
+  setPackageId(id: number): void {
+    this.packageId.set(id);
+  }
+ 
+  // Method to get the current packageId
+  getPackageId(): number | null {
+    return this.packageId();
+  }
+ 
+  // Method to clear the packageId
+  clearPackageId(): void {
+    this.packageId.set(null);
+  }
  
  
  constructor(private http: HttpClient,private authService: AuthserviceService) {}

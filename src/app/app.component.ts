@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router'; // Import NavigationEnd
-import { HeaderComponent } from './Components/header/header.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { LoginComponent } from "./Components/login/login.component";
 import { routes } from './app.routes';
@@ -9,7 +8,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FooterComponent,HeaderComponent, LoginComponent,CommonModule],
+  imports: [RouterOutlet, FooterComponent, LoginComponent,CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -17,11 +16,14 @@ export class AppComponent {
   title = 'Travel Package Booking System';
   showLogin: boolean = true;
 
+
   constructor(private router: Router) {
+
     // Listen to route changes and filter for NavigationEnd events
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.showLogin = this.router.url !== '/app-herosection';
+        
       }
     });
     this.router.events.subscribe((event) => {
@@ -31,4 +33,5 @@ export class AppComponent {
       }
     });
   }
+
 }

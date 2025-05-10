@@ -10,14 +10,19 @@ import { AuthserviceService } from '../../Services/authservice.service';
   styleUrls: ['./herosection.component.css']
 })
 export class HerosectionComponent {
-  name= localStorage.getItem('Name');
+  name: string | null = null;
 
-  constructor(private router: Router,private authS: AuthserviceService) {}
+  constructor(private router: Router, private authS: AuthserviceService) {
+    if (typeof window !== 'undefined' && localStorage) {
+      // Access localStorage only in the browser
+      this.name = localStorage.getItem('Name');
+    }
+  }
 
-  bookNow() {
-    console.log('Book Now button clicked!');
+  explore() {
+    console.log('explore button clicked!');
     // Add your booking logic here
-    this.router.navigate(['/app-booknow']);
+    this.router.navigate(['/app-packages']);
   }
 
   navigateToProfile() {
@@ -32,7 +37,7 @@ export class HerosectionComponent {
 
   navigateToContact() {
     console.log('Navigating to Contact Us');
-    this.router.navigate(['/app-assistance']);
+    this.router.navigate(['/app-create-assistance']);
   }
   
   logout(){

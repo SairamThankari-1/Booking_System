@@ -1,78 +1,83 @@
-/* styles.css */
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+/* Admin Dashboard Custom Styles */
+.admin-dashboard .summary-card {
+  border-left: 5px solid #0d6efd;
+  transition: transform 0.2s ease;
 }
-
-.dashboard {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.admin-dashboard .summary-card:hover {
+  transform: translateY(-5px);
 }
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+ 
+.admin-dashboard .summary-title {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
 }
-
-header h1 {
-    margin: 0;
+ 
+.admin-dashboard .summary-value {
+  font-size: 2rem;
+  font-weight: bold;
 }
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
+ 
+.admin-dashboard .section-title {
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #0d6efd;
+  border-left: 4px solid #0d6efd;
+  padding-left: 10px;
 }
-
-nav ul li {
-    margin-right: 20px;
+ 
+.table th,
+.table td {
+  vertical-align: middle;
 }
-
-nav ul li a {
-    text-decoration: none;
-    color: #333;
+/* Adjust chart card spacing and sizing */
+.card .card-body canvas {
+  max-height: 300px;
 }
-
-main {
-    padding: 20px 0;
+ 
+/* Center content in the doughnut chart card */
+.card .card-body.text-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-section {
-    margin-bottom: 40px;
+.card {
+  border-radius: 10px;
 }
-
-section h2 {
-    margin-bottom: 20px;
+ 
+.card-header {
+  font-weight: bold;
+  font-size: 18px;
 }
-
-table {
-    width: 100%;
-    border-collapse: collapse;
+ 
+canvas {
+  max-width: 100%;
 }
-
-table th, table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
+html {
+  scroll-behavior: smooth;
 }
-
-table th {
-    background-color: #f4f4f4;
+/* Custom Admin Navbar Styles */
+.admin-dashboard .navbar {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
-
-footer {
-    text-align: center;
-    padding: 10px 0;
-    border-top: 1px solid #ddd;
-    margin-top: 20px;
+ 
+.admin-dashboard .navbar-nav .nav-item {
+  list-style: none;
 }
+ 
+.admin-dashboard .navbar-nav .nav-link {
+  color: #0d6efd;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+ 
+.admin-dashboard .navbar-nav .nav-link:hover {
+  background-color: #e9ecef;
+  text-decoration: none;
+}
+ 

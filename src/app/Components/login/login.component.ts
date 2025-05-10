@@ -6,7 +6,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthserviceService } from '../../Services/authservice.service';
 
-
 @Component({
   selector: 'app-login',
   imports: [CommonModule,FormsModule,ReactiveFormsModule,RouterLink, RouterLinkActive],
@@ -25,14 +24,7 @@ export class LoginComponent {
    });
    }
   
-  // onSubmit() {
-  //  if (this.loginForm.valid) {
-  //  console.log('Form Submitted!', this.loginForm.value);
-  //  // Add your authentication logic here
-  //   this.router.navigate(['app-herosection']);
-
-  //  }
-  //  }
+  
    onSubmit():void{
     const email=this.loginForm?.get('email')?.value;
     const password = this.loginForm?.get('password')?.value;
@@ -50,12 +42,15 @@ export class LoginComponent {
             this.authS.decodeToken();
             const decodedToken = this.authS.decodeToken();
             this.authS.setUser(decodedToken.UserID,decodedToken.Name,decodedToken.Email,decodedToken.ContactNumber);
+            localStorage.setItem('userRole', decodedToken.Role);
+        //    this.appComponent.isLoggedIn = true;
+
             console.log(this.authS.getTokenExpiry());
             console.log(this.authS.getRole());
             
             if( this.authS.getRole() === 'Travel Agent') {
               alert('Travel Agent Login Successful'); 
-              this.router.navigate(['/app-agent']);
+              this.router.navigate(['/app-travel-agent']);
             }
             else if (this.authS.getRole() === 'Admin') {
               alert('Admin Login Successful');
