@@ -18,6 +18,7 @@ import { ReviewComponent } from './Components/reviews/reviews.component';
 import { TravelAgentComponent } from './Components/travel-agent/travel-agent.component';
 import { AddComponent } from './Components/add/add.component';
 import { UsersComponent } from './Components/users/users.component';
+import { AdminBookingsComponent } from './Components/admin-bookings/admin-bookings.component';
 
 export const routes: Routes = [
     {
@@ -96,5 +97,9 @@ export const routes: Routes = [
     {
         path:'app-users',
         component:UsersComponent
+    },
+    {
+        path:'app-admin-bookings',
+        component:AdminBookingsComponent
     }
 ];

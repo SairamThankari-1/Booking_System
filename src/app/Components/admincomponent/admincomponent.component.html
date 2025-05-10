@@ -105,8 +105,6 @@
       </div>
      
      
-     
- 
  
     <!-- Tables -->
     <section id="bookings" class="mb-5">
@@ -138,6 +136,7 @@
       <div class="text-center mt-3">
         <button *ngIf="visibleRows < bookings.length" class="btn btn-primary" (click)="seeMore()">See More</button>
       </div>
+      <button class="btn btn-primary mt-3" (click)="goToBookings()">Go to Bookings</button>
     </section>
  
     <section id="users" class="mb-5">

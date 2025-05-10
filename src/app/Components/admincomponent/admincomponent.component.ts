@@ -216,6 +216,9 @@ logout(): void {
 //     });
 //   }
 // }
+goToBookings(): void {
+  this.router.navigate(['/app-admin-bookings']);
+}
 
 }
 
