@@ -1,33 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService, User } from '../../Services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  public userData: Omit<User, 'userID'> = {
-    name: '',
-    email: '',
-    password: '',
-    contactNumber: ''
-  };
+  public userForm!: FormGroup; // Reactive form instance
   public userID: number | null = null; // Separate variable for userID
   public userList: User[] = [];
   public isEditing: boolean = false;
   public successMessage: string = '';
   public errorMessage: string = '';
 
-  constructor(private userService: UserService,private router:Router) {}
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUsers();
+
+    // Initialize the reactive form
+    this.userForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      contactNumber: ['', Validators.required]
+    });
   }
 
   public loadUsers(): void {
@@ -46,19 +49,19 @@ export class UsersComponent implements OnInit {
   public editUser(user: User): void {
     this.isEditing = true;
     this.userID = user.userID!; // Store userID separately
-    this.userData = {
+    this.userForm.patchValue({
       name: user.name,
       email: user.email,
       password: user.password,
       contactNumber: user.contactNumber
-    };
+    });
     this.clearMessages();
   }
 
   public updateUser(): void {
-    if (this.userID) {
+    if (this.userForm.valid && this.userID) {
       this.clearMessages();
-      this.userService.updateUser(this.userID, this.userData).subscribe({
+      this.userService.updateUser(this.userID, this.userForm.value).subscribe({
         next: () => {
           this.successMessage = 'User updated successfully';
           this.loadUsers();
@@ -69,8 +72,11 @@ export class UsersComponent implements OnInit {
           this.errorMessage = 'Error updating user';
         }
       });
+    } else {
+      this.errorMessage = 'Please fill out the form correctly.';
     }
   }
+
   public deleteUser(userID: number): void {
     if (confirm('Are you sure you want to delete this user?')) {
       this.userService.deleteUser(userID).subscribe({
@@ -85,14 +91,10 @@ export class UsersComponent implements OnInit {
       });
     }
   }
+
   public resetForm(): void {
     this.clearMessages();
-    this.userData = {
-      name: '',
-      email: '',
-      password: '',
-      contactNumber: ''
-    };
+    this.userForm.reset();
     this.userID = null; // Reset userID
     this.isEditing = false;
   }
@@ -101,6 +103,7 @@ export class UsersComponent implements OnInit {
     this.successMessage = '';
     this.errorMessage = '';
   }
+
   goBack(): void {
     this.router.navigate(['/app-admincomponent']);
   }

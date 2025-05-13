@@ -19,11 +19,8 @@ interface Package {
   providedIn: 'root'
 })
 export class PackserviceService {
-  //private apiUrl = 'https://localhost:7117/api/Package';
-  // // Replace with actual backend API
-   
- 
- 
+  
+
   constructor(private http: HttpClient,private authService: AuthserviceService) {}
  
   addPackage(packageData: Package): Observable<any> {
@@ -83,7 +80,6 @@ export class PackserviceService {
   deletePackage(packageId: number): Observable<any> {
     const token = this.authService.getToken();  
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
     return this.http.delete<any>(`${Constant.BASE_URI}Package/${packageId}`,{ headers });
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient,  HttpHeaders } from '@angular/common/http';
 import { AuthserviceService } from './authservice.service';
+import { Constant } from '../Components/Constant/constant';
 
 export interface User {
   userID?: number; // Optional because it won't be included in userData during updates
@@ -15,7 +16,7 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'https://localhost:7117/api/User'; // Replace with your actual API endpoint
+  private apiUrl =  `${Constant.BASE_URI}User`; 
 
   constructor(private http: HttpClient,private authService: AuthserviceService) {}
 
@@ -25,12 +26,8 @@ export class UserService {
   
     return this.http.get<User[]>(this.apiUrl,{ headers });
   }
+ 
 
-  createUser(user: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user);
-  }
-
-  // Update user without including userID in the userData
   updateUser(userID: number, userData: Omit<User, 'userID'>): Observable<void> {
     const token = this.authService.getToken();  
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

@@ -19,7 +19,7 @@ interface HoverStates {
   styleUrls: ['./reviews.component.css']
 })
  
-export class ReviewComponent implements OnInit {
+export class ReviewsComponent implements OnInit {
   reviews: Review[] = [];
   reviewForm: FormGroup;
   loading = false;

@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthserviceService } from '../../Services/authservice.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-travel-agent',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './travel-agent.component.html',
   styleUrl: './travel-agent.component.css'
 })
 export class TravelAgentComponent {
   name: string | null = null;
-
+  userRole=localStorage.getItem('userRole');
   constructor(private router: Router, private authS: AuthserviceService) {
     if (typeof window !== 'undefined' && localStorage) {
       // Access localStorage only in the browser
@@ -40,8 +41,9 @@ export class TravelAgentComponent {
   }
   
   logout(){
-    this.authS.removeToken();
-    this.authS.removeUser();
+    // this.authS.removeToken();
+    // this.authS.removeUser();
+    this.authS.logout();
     this.router.navigate(['']);
   }
 

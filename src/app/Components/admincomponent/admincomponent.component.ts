@@ -1,6 +1,6 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AuthserviceService } from '../../Services/authservice.service';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ChartOptions, ChartType, ChartDataset,ChartData } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-admincomponent',
+  standalone: true, 
   imports: [CommonModule,NgChartsModule,FormsModule],
   templateUrl: './admincomponent.component.html',
   styleUrl: './admincomponent.component.css'
@@ -16,7 +17,6 @@ export class AdmincomponentComponent implements OnInit {
   bookings: any[] = [];
   customers: any[] = [];
   packages: any[] = [];
-  categories: any[] = [];
   reviews: any[] = [];
   users: any[] = [];
   totalUsers: number = 0;
@@ -25,44 +25,58 @@ export class AdmincomponentComponent implements OnInit {
   totalCustomers: number = 0;
   totalTravelAgents: number = 0;
   visibleRows: number = 5;
+ userRole: string | null = localStorage.getItem('userRole');
  
- 
-  // Chart properties
+  
+
   public barChartOptions: ChartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: true,
-      },
-    },
-    scales: {
-      x: {
-        grid: {
-          display: false,
-        },
-      },
-      y: {
-        beginAtZero: true,
-        grid: {
-          color: '#e5e5e5',
-        },
-      },
-    },
-    elements: {
-      bar: {
-        borderRadius: {
-          topLeft: 10,
-          topRight: 10,
-          bottomLeft: 0,
-          bottomRight: 0,
-        },
-        borderSkipped: false, // Ensures full border rounding
-      },
-    },
-  };
+     responsive: true,
+     plugins: {
+     legend: {
+     display: false,
+     },
+     tooltip: {
+     enabled: true,
+     },
+     },
+     scales: {
+     x: {
+     grid: {
+     display: true,
+     color: '#f0f0f0',
+     },
+     },
+     y: {
+     beginAtZero: true,
+     grid: {
+     color: '#e5e5e5',
+     },
+     },
+     },
+     elements: {
+     bar: {
+     borderRadius: {
+     topLeft: 10,
+     topRight: 10,
+     bottomLeft: 0,
+     bottomRight: 0,
+     },
+     borderSkipped: false,
+     backgroundColor: (context) => {
+     const chart = context.chart;
+     const { ctx, chartArea } = chart;
+     if (!chartArea) {
+     return '#ff6384'; // Default color if chartArea is not available
+     }
+     const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+     gradient.addColorStop(0, '#ff6384');
+     gradient.addColorStop(1, '#36a2eb');
+     return gradient as CanvasGradient;
+     },
+     },
+     },
+    };
+      
   barChartLabels: string[] = [];
   barChartType: ChartType = 'bar';
   barChartLegend = true;
@@ -70,17 +84,25 @@ export class AdmincomponentComponent implements OnInit {
     { data: [], label: 'Bookings' }
   ];
   doughnutChartLabels: string[] = ['Cancelled', 'Confirmed'];
-  doughnutChartData: ChartData<'doughnut'> = {
-  labels: this.doughnutChartLabels,
-  datasets: [
-    {
-      data: [0, 0],
-      backgroundColor: ['#ffc107', '#28a745']
-    }
-  ]
-};
-doughnutChartType: ChartType = 'doughnut';
-  constructor(private apiService: AuthserviceService,private router:Router) { }
+
+
+
+public doughnutChartData: ChartData<'doughnut'> = {
+   labels: this.doughnutChartLabels,
+   datasets: [
+   {
+   data: [0, 0],
+   backgroundColor: ['#ff6384', '#36a2eb'], //  vibrant colors
+   hoverBackgroundColor: ['#ff7f91', '#5aa9f4'], // Slightly lighter colors on hover
+   borderColor: ['#ffffff', '#ffffff'], // White borders for better contrast
+   borderWidth: 2, // Thicker borders for a cleaner look
+   },
+   ],
+  };
+  
+  
+  doughnutChartType: ChartType = 'doughnut';
+  constructor(private apiService: AuthserviceService,private router:Router, private cdr:ChangeDetectorRef) { }
  
   ngOnInit(): void {
     this.getBookings();
@@ -125,7 +147,18 @@ doughnutChartType: ChartType = 'doughnut';
     const Cancelled = this.bookings.filter(b => b.status === 'Cancelled').length;
     const confirmed = this.bookings.filter(b => b.status === 'Confirmed').length;
  
-    this.doughnutChartData.datasets[0].data = [Cancelled, confirmed];
+    // Update doughnut chart data
+    this.doughnutChartData = {
+      ...this.doughnutChartData, // Spread existing properties
+      datasets: [
+        {
+          ...this.doughnutChartData.datasets[0], // Spread existing dataset properties
+          data: [Cancelled, confirmed] // Update data
+        }
+      ]
+    };
+
+    this.cdr.detectChanges();
     });
   }
  
@@ -180,42 +213,10 @@ goToUsers(): void {
 }
 
 logout(): void {
-  this.apiService.removeUser();
-  this.apiService.removeToken();
+  this.apiService.logout();
   this.router.navigate(['/']); // Redirect to the login page
 }
 
-// enableEdit(user: any): void {
-//   user.isEditing = true;
-//   user.originalData = { ...user }; // Save original data in case of cancel
-// }
-
-// saveEdit(user: any): void {
-//   this.apiService.updateUserProfile(user).subscribe(() => {
-//     user.isEditing = false;
-//     alert('User updated successfully.');
-//   }, error => {
-//     console.error('Error updating user:', error);
-//     alert('Failed to update user.');
-//   });
-// }
-
-// cancelEdit(user: any): void {
-//   Object.assign(user, user.originalData); // Revert to original data
-//   user.isEditing = false;
-// }
-
-// deleteUser(userId: number): void {
-//   if (confirm('Are you sure you want to delete this user?')) {
-//     this.apiService.deleteUser(userId).subscribe(() => {
-//       this.users = this.users.filter(user => user.id !== userId);
-//       alert('User deleted successfully.');
-//     }, error => {
-//       console.error('Error deleting user:', error);
-//       alert('Failed to delete user.');
-//     });
-//   }
-// }
 goToBookings(): void {
   this.router.navigate(['/app-admin-bookings']);
 }

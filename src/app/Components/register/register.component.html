@@ -1,4 +1,4 @@
-<div class="register-container">
+<div class="register-container mb-4">
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="name">Name</label>
@@ -30,7 +30,8 @@
       </div>
       <button type="submit">Register</button>
     </form>
-    <a routerLink="" routerLinkActive="active">Already have account ?Signin</a>
-
+    <div class="mt-3 mb-2">
+    <a routerLink="" routerLinkActive="active">Already have account ? Signin</a>
+  </div>
   </div>
   

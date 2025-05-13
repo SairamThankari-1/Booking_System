@@ -140,7 +140,7 @@ export class BooknowComponent implements OnInit {
           } else {
             alert('Booking successful!');
           }
-          this.router.navigate(['/app-packages']);
+          this.router.navigate(['/app-bookings']);
         },
         error: (error: any) => {
           console.error('Booking failed:', error);
@@ -168,4 +168,7 @@ export class BooknowComponent implements OnInit {
   navigateToPackages(): void {
     this.router.navigate(['/packages']);
   }
+  goBack() {
+    this.router.navigate(['/app-packages']);
+    }
 }

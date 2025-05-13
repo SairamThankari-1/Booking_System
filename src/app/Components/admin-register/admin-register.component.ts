@@ -19,7 +19,7 @@ export class AdminRegisterComponent {
      name: ['', Validators.required],
      contactNumber: ['', Validators.required],
      email: ['', [Validators.required, Validators.email]],
-     password: ['', Validators.required],
+     password: ['', Validators.minLength(6)],
      role:['', Validators.required]
      });
      
@@ -51,6 +51,8 @@ export class AdminRegisterComponent {
       alert('Please fill out the form correctly.');
     }
   }  
-
+  goback() {
+    this.router.navigate(['app-admincomponent']);
+  }
 
 }

@@ -18,7 +18,7 @@
       </div>
  
       <!-- Package Form -->
-      <form [formGroup]="packageForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+      <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
         <!-- Title -->
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
@@ -27,12 +27,12 @@
             id="title"
             formControlName="title"
             class="form-control"
-            [ngClass]="{'is-invalid': packageForm.get('title')?.invalid && packageForm.get('title')?.touched}"
+            [ngClass]="{'is-invalid': updateForm.get('title')?.invalid && updateForm.get('title')?.touched}"
           >
-          <div class="invalid-feedback" *ngIf="packageForm.get('title')?.errors?.['required']">
+          <div class="invalid-feedback" *ngIf="updateForm.get('title')?.errors?.['required']">
             Title is required
           </div>
-          <div class="invalid-feedback" *ngIf="packageForm.get('title')?.errors?.['minlength']">
+          <div class="invalid-feedback" *ngIf="updateForm.get('title')?.errors?.['minlength']">
             Title must be at least 3 characters long
           </div>
         </div>
@@ -45,9 +45,9 @@
             id="duration"
             formControlName="duration"
             class="form-control"
-            [ngClass]="{'is-invalid': packageForm.get('duration')?.invalid && packageForm.get('duration')?.touched}"
+            [ngClass]="{'is-invalid': updateForm.get('duration')?.invalid && updateForm.get('duration')?.touched}"
           >
-          <div class="invalid-feedback" *ngIf="packageForm.get('duration')?.invalid">
+          <div class="invalid-feedback" *ngIf="updateForm.get('duration')?.invalid">
             Duration is required
           </div>
         </div>
@@ -60,9 +60,9 @@
             formControlName="description"
             class="form-control"
             rows="3"
-            [ngClass]="{'is-invalid': packageForm.get('description')?.invalid && packageForm.get('description')?.touched}"
+            [ngClass]="{'is-invalid': updateForm.get('description')?.invalid && updateForm.get('description')?.touched}"
           ></textarea>
-          <div class="invalid-feedback" *ngIf="packageForm.get('description')?.invalid">
+          <div class="invalid-feedback" *ngIf="updateForm.get('description')?.invalid">
             Description is required
           </div>
         </div>
@@ -75,12 +75,12 @@
             id="price"
             formControlName="price"
             class="form-control"
-            [ngClass]="{'is-invalid': packageForm.get('price')?.invalid && packageForm.get('price')?.touched}"
+            [ngClass]="{'is-invalid': updateForm.get('price')?.invalid && updateForm.get('price')?.touched}"
           >
-          <div class="invalid-feedback" *ngIf="packageForm.get('price')?.errors?.['required']">
+          <div class="invalid-feedback" *ngIf="updateForm.get('price')?.errors?.['required']">
             Price is required
           </div>
-          <div class="invalid-feedback" *ngIf="packageForm.get('price')?.errors?.['min']">
+          <div class="invalid-feedback" *ngIf="updateForm.get('price')?.errors?.['min']">
             Price must be greater than 0
           </div>
         </div>
@@ -126,9 +126,9 @@
             id="image"
             formControlName="image"
             class="form-control"
-            [ngClass]="{'is-invalid': packageForm.get('image')?.invalid && packageForm.get('image')?.touched}"
+            [ngClass]="{'is-invalid': updateForm.get('image')?.invalid && updateForm.get('image')?.touched}"
           >
-          <div class="invalid-feedback" *ngIf="packageForm.get('image')?.invalid">
+          <div class="invalid-feedback" *ngIf="updateForm.get('image')?.invalid">
             Image URL is required
           </div>
         </div>
@@ -138,7 +138,7 @@
           <button
             type="submit"
             class="btn btn-primary"
-            [disabled]="packageForm.invalid || loading"
+            [disabled]="updateForm.invalid || loading"
           >
             Update Package
           </button>

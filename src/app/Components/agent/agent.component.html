@@ -1,4 +1,4 @@
-<div class="agent-packages-container">
+<div class="agent-packages-container"*ngIf="userRole === 'Travel Agent' || userRole === 'Admin'; else notAgent">
   <!-- Header Section -->
   <div class="header-section">
     <h1 class="section-title">Available Packages</h1>
@@ -57,4 +57,10 @@
     </div>
   </ng-template>
 </div>
+<ng-template #notAgent>
+  <div class="not-agent">
+    <h2>You are not a Authorized to access this page</h2>
+    <p>Please contact your administrator for more information.</p>
+  </div>
+</ng-template>
  

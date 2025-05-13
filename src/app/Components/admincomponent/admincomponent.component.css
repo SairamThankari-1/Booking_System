@@ -80,4 +80,14 @@ html {
   background-color: #e9ecef;
   text-decoration: none;
 }
+
+.booking-status-header {
+  background-color: #36a2eb;
+  color:#ffffff;
+  }
+  
+  .booking-status-body {
+  background-color: #ff6384;
+  }
+  
  

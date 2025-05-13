@@ -1,4 +1,4 @@
-<div class="hero-container" >
+<div class="hero-container" *ngIf="userRole === 'Travel Agent' || userRole === 'Admin'; else notAgent">
     <div class="navbar">
       <button (click)="navigateToProfile()">Profile</button>
       <button (click)="navigateToContact()">Contact Us</button>
@@ -10,3 +10,9 @@
       <button (click)="explore()" class="btn btn-primary">Explore Now</button>
     </div>
   </div>
+  <ng-template #notAgent>
+    <div class="not-agent">
+      <h2>You are not a travel agent.</h2>
+      <p>Please contact your administrator for more information.</p>
+    </div>
+  </ng-template>

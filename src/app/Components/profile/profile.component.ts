@@ -34,9 +34,7 @@ export class ProfileComponent {
     }
  }
   logout() {
-    this.authService.removeUser();
-    this.authService.removeToken();
-
+    this.authService.logout();
     this.router.navigate(['']);
   }
   editProfile() {

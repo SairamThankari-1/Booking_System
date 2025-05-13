@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { AuthserviceService } from '../../Services/authservice.service';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule,FormsModule,ReactiveFormsModule,RouterLink, RouterLinkActive],
+  imports: [CommonModule,ReactiveFormsModule,RouterLink, RouterLinkActive],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -19,7 +19,7 @@ export class LoginComponent {
   
    constructor(private fb: FormBuilder, private router: Router, private authS: AuthserviceService) {
    this.loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
+   email: ['', [Validators.required, Validators.email]],
    password: ['', [Validators.required, Validators.minLength(6)]]
    });
    }
@@ -38,12 +38,9 @@ export class LoginComponent {
           if (response && response.token) {
             const token = response.token;
             this.authS.setToken(token);
-            // Decode and print the token
-            this.authS.decodeToken();
             const decodedToken = this.authS.decodeToken();
             this.authS.setUser(decodedToken.UserID,decodedToken.Name,decodedToken.Email,decodedToken.ContactNumber);
             localStorage.setItem('userRole', decodedToken.Role);
-        //    this.appComponent.isLoggedIn = true;
 
             console.log(this.authS.getTokenExpiry());
             console.log(this.authS.getRole());

@@ -22,7 +22,7 @@ export class EditProfileComponent implements OnInit {
       name: ['', Validators.required],
       contactNumber: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.minLength(6)]
     });
   }
 

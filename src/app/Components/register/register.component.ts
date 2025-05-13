@@ -6,7 +6,7 @@ import { AuthserviceService } from '../../Services/authservice.service';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule,FormsModule,ReactiveFormsModule,RouterLink, RouterLinkActive],
+  imports: [CommonModule,ReactiveFormsModule,RouterLink, RouterLinkActive],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -20,7 +20,7 @@ export class RegisterComponent {
      name: ['', Validators.required],
      contactNumber: ['', Validators.required],
      email: ['', [Validators.required, Validators.email]],
-     password: ['', Validators.required]
+     password: ['', Validators.minLength(6)]
      });
      
     }

@@ -14,14 +14,12 @@ export class HerosectionComponent {
 
   constructor(private router: Router, private authS: AuthserviceService) {
     if (typeof window !== 'undefined' && localStorage) {
-      // Access localStorage only in the browser
       this.name = localStorage.getItem('Name');
     }
   }
 
   explore() {
     console.log('explore button clicked!');
-    // Add your booking logic here
     this.router.navigate(['/app-packages']);
   }
 
@@ -41,8 +39,7 @@ export class HerosectionComponent {
   }
   
   logout(){
-    this.authS.removeToken();
-    this.authS.removeUser();
+    this.authS.logout();
     this.router.navigate(['']);
   }
 }

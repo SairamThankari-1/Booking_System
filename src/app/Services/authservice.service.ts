@@ -94,7 +94,6 @@ export class AuthserviceService {
     return null;
   }
 
-   // Method to get customers
 getTotalUsers(): Observable<any> {
  const token = this.getToken();
  const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -180,6 +179,10 @@ registerAdminUser(AdminuserData: AdminUser): Observable<any> {
     const token = this.getToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.put(`${Constant.BASE_URI}Booking/cancel/${bookingId}`, { headers });
+  }
+  logout(): void {
+    this.removeToken();
+    this.removeUser();
   }
  
 }

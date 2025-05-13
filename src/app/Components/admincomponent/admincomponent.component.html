@@ -1,4 +1,4 @@
-<div class="container my-4 admin-dashboard">
+<div class="container-fluid my-4 admin-dashboard" *ngIf="userRole === 'Admin'; else notAdmin">
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
       <h1 class="h3 text-primary fw-bold">Admin Dashboard</h1>
@@ -14,14 +14,13 @@
             <a class="nav-link fw-semibold text-primary" (click)="scrollToSection('packages')">Packages</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-semibold text-primary" (click)="scrollToSection('reviews')">Reviews</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link fw-semibold text-primary" (click)="gotoAssistance()">Assistance</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold text-primary" (click)="openAddAgentForm()">Add Travel Agents/ Admin</a>
+           </li> 
         </ul>
-      </nav>
-     
+      </nav>   
     </div>
  
     <!-- Summary Cards -->
@@ -47,7 +46,6 @@
               <div class="card-body">
                 <p class="summary-title">No. of Travel Agents</p>
                 <h3 class="summary-value text-warning">{{ totalTravelAgents }}</h3>
-                <button class="btn btn-primary mt-3" (click)="openAddAgentForm()">Add Agent</button>
               </div>
             </div>
           </div>
@@ -68,7 +66,6 @@
                 </div>
             </div>
         </div>
- 
     <!-- Charts Section -->
     <!-- Doughnut Chart -->
     <div class="row my-4">
@@ -89,28 +86,25 @@
           </div>
         </div>
     <!-- Doughnut Chart -->
-        <div class="col-md-6">
-          <div class="card shadow-sm">
-            <div class="card-header bg-success text-white">
-              Booking Status Overview
-            </div>
-            <div class="card-body">
-              <canvas baseChart
-                      [data]="doughnutChartData"
-                      [type]="doughnutChartType">
-              </canvas>
-            </div>
-          </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-header  bg-primary text-white">
+          Booking Status Overview
+        </div>
+        <div class="card-body">
+          <canvas baseChart
+                  [data]="doughnutChartData"
+                  [type]="doughnutChartType">
+          </canvas>
         </div>
       </div>
-     
-     
- 
+    </div>
+  </div>
     <!-- Tables -->
     <section id="bookings" class="mb-5">
       <h4 class="section-title">Manage Bookings</h4>
       <div class="table-responsive">
-        <table class="table table-bordered table-hover align-middle">
+        <table class="table table-striped table-hover align-middle">
           <thead class="table-dark text-light">
             <tr>
               <th>Booking ID</th>
@@ -173,7 +167,7 @@
     <section id="packages" class="mb-5">
       <h4 class="section-title">Packages</h4>
       <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-striped table-hover">
           <thead class="table-dark text-light">
             <tr>
                 <th>Package ID</th>
@@ -181,9 +175,9 @@
                 <th>Description</th>
                 <th>Price</th>
                 <th>Duration</th>
-                <th>Including Services</th>
+                <!-- <th>Including Services</th>
                 <th>Category</th>
-            </tr>
+            </tr> -->
           </thead>
           <tbody>
             <tr *ngFor="let package of packages | slice:0:visibleRows">
@@ -192,8 +186,8 @@
                 <td>{{ package.description }}</td>
                 <td>{{ package.price }}</td>
                 <td>{{ package.duration }}</td>
-                <td>{{ package.includedServices }}</td>
-                <td>{{ package.category }}</td>
+                <!-- <td>{{ package.includedServices }}</td>
+                <td>{{ package.category }}</td> -->
             </tr>
           </tbody>
         </table>
@@ -206,36 +200,12 @@
  
    
  
-    <section id="reviews" class="mb-5">
-      <h4 class="section-title">Package Reviews</h4>
-      <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-          <thead class="table-dark text-light">
-            <tr>
-              <th>Review ID</th>
-              <th>User ID</th>
-              <th>Package ID</th>
-              <th>Rating</th>
-              <th>Comment</th>
-              <th>Timestamp</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let review of reviews">
-              <td>{{ review.reviewID }}</td>
-              <td>{{ review.userID }}</td>
-              <td>{{ review.packageID }}</td>
-              <td>{{ review.rating }}</td>
-              <td>{{ review.comment }}</td>
-              <td>{{ review.timeStamp }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
     <button (click)="logout()" class="btn btn-secondary">Log Out</button>
-    <!-- Footer
-    <footer class="text-center border-top pt-3 mt-4 text-muted">
-      &copy; 2025 Travel Package Booking System
-    </footer> -->
+   
   </div>
+  <ng-template #notAdmin>
+    <div class="not-agent">
+      <h2>You are not a Authorized to access this page</h2>
+      <p>Please contact your administrator for more information.</p>
+    </div>
+  </ng-template>

@@ -10,7 +10,8 @@ import { AuthserviceService } from '../../Services/authservice.service';
   styleUrl: './bookings.component.css'
 })
 export class BookingsComponent implements OnInit {
-  
+
+
 bookings: any[] = [];
 userId= Number(localStorage.getItem('userId'));
   constructor(private router: Router, private authS: AuthserviceService) {}
@@ -22,7 +23,7 @@ userId= Number(localStorage.getItem('userId'));
    }
    getBookings(): void {
     this.authS.getBookingsByUserId(this.userId).subscribe(data => {
-      this.bookings = data; 
+      this.bookings = data.sort((a:any, b:any) => b.bookingID - a.bookingID);
       console.log(data);
     });
   }
